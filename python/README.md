@@ -166,9 +166,13 @@ parameter, named the way CmdStan names them, so `theta` declared as
 
 ## Platforms
 
-Wheels for macOS (arm64 and x86_64) and Linux (x86_64 and aarch64,
-manylinux_2_28). Windows is not built yet; it needs a mingw-w64 toolchain,
-because stan-math does not build under MSVC.
+Wheels for macOS (arm64 and x86_64), Linux (x86_64 and aarch64,
+manylinux_2_28) and Windows (x86_64). The Windows wheel is built under
+mingw-w64, because stan-math does not build under MSVC, which is the same
+reason RStan ships through RTools. It bundles `stanc.exe` and runs it as
+a subprocess instead of embedding the compiler, which waits on opam's
+native Windows support; `Model("model.stan", data)` works the same way
+either way.
 
 The installed library is 22.2 MB, which is the trade this design makes:
 ship the compiler and every kernel once, so that nothing is ever built on
